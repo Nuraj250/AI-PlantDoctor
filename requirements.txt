@@ -1,6 +1,37 @@
-fastapi
-uvicorn
+# 🧠 Core ML
 torch
 torchvision
+
+# ⚙️ Web framework
+fastapi
+uvicorn
+
+# 🖼 Image processing
 pillow
+
+# 🧪 Model training and evaluation
+scikit-learn
+matplotlib
+tqdm
+
+# 🌐 Frontend communication
 python-multipart
+
+# 📊 CSV/JSON handling (built-in but listed for clarity)
+pandas
+
+# 🔒 CORS middleware
+python-dotenv
+
+# 📨 Email reminders (optional)
+smtplib
+email-validator
+
+# 📁 File operations (built-in)
+# os, io, csv, datetime
+
+# 🐍 Kaggle CLI for dataset download
+kaggle
+
+# ✨ Other optional (useful for API testing & development)
+requests
