@@ -1,8 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from starlette.responses import Response
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from app.routes import predict
+import os
 
 def create_app() -> FastAPI:
     app = FastAPI(
@@ -11,25 +14,38 @@ def create_app() -> FastAPI:
         version="1.0.0"
     )
 
-    # CORS middleware
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],  # You can restrict to specific frontend domains
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
 
-    # Register API routes
-    app.include_router(predict.router, prefix="/api")
-
-    # Mount static UI (Bootstrap form)
+    # Mount public UI files
     app.mount("/public", StaticFiles(directory="public"), name="public")
 
-    # Serve index.html at root
+    # Routes
+    app.include_router(predict.router, prefix="/api")
+
+    # Serve root index
     @app.get("/", response_class=FileResponse)
     async def serve_index():
         return FileResponse("public/index.html")
+
+    # Serve dashboard
+    @app.get("/dashboard", response_class=FileResponse)
+    async def serve_dashboard():
+        return FileResponse("public/dashboard.html")
+
+    # 404 fallback to frontend
+    @app.exception_handler(StarletteHTTPException)
+    async def custom_404_handler(request: Request, exc: StarletteHTTPException):
+        if exc.status_code == 404 and not request.url.path.startswith("/api"):
+            index_path = "public/index.html"
+            if os.path.exists(index_path):
+                return FileResponse(index_path)
+        return Response(status_code=exc.status_code, content=exc.detail)
 
     return app
 
