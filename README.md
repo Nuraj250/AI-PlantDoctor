@@ -1,6 +1,6 @@
 # 🌿 AI Plant Doctor
 
-AI Plant Doctor is a deep learning web app that diagnoses plant leaf diseases and recommends effective treatments — with multilingual support and farmer-friendly advice. Includes a training dashboard, CSV logs, prediction history, and optional email reminders.
+AI Plant Doctor is a deep learning web app that diagnoses plant leaf diseases and recommends effective treatments with multilingual support and farmer-friendly advice. Includes a training dashboard, CSV logs, prediction history, and optional email reminders.
 
 ---
 
