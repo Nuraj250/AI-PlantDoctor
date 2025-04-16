@@ -1,8 +1,20 @@
 {
-    "Healthy": "No treatment needed. Keep monitoring and maintain good care practices.",
-    "Leaf Spot": "Remove infected leaves, improve air circulation, and apply a copper-based fungicide.",
-    "Rust": "Use sulfur or neem oil spray weekly. Remove infected leaves and avoid overhead watering.",
-    "Blight": "Apply a copper fungicide early. Remove infected plants and avoid splashing water on leaves.",
-    "Powdery Mildew": "Spray with neem oil or potassium bicarbonate. Remove affected leaves and improve air circulation."
+  "Healthy": {
+    "treatment": "No treatment needed. Monitor regularly and water as required.",
+    "video": "https://www.youtube.com/watch?v=9bd8aKkz_kY",
+    "product": null,
+    "lang": {
+      "si": "ප්‍රතිකාර අවශ්‍ය නොවේ. බිම් ආර්දතාව පරීක්ෂා කර සවිකිරීම පමණක් කරන්න.",
+      "ta": "சிகிச்சை தேவையில்லை. தாவரங்களை பார்வையிட்டு, நீர்ப்பாசனம் மட்டும் செய்யவும்."
+    }
+  },
+  "Powdery Mildew": {
+    "treatment": "Spray neem oil or potassium bicarbonate every 7 days. Remove affected leaves.",
+    "video": "https://www.youtube.com/watch?v=a4vL-DQjPNU",
+    "product": "https://www.amazon.com/dp/B000MR6GLO",
+    "lang": {
+      "si": "නිම් තෙල් හෝ පොටෑසියම් බයිකාර්බනට් භාවිතයෙන් 7 දිනකට වරක් පිච්චන්න.",
+      "ta": "வாரத்திற்கு ஒருமுறை நீம் எண்ணெய் அல்லது பொட்டாசியம் பைக்கார்பனேட் தெளிக்கவும்."
+    }
   }
-  
+}

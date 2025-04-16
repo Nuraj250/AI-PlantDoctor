@@ -1,18 +1,41 @@
+Absolutely — here is your **fully updated `README.md`**, reflecting everything you’ve added:
+
+✅ Kaggle setup  
+✅ Training & dashboard  
+✅ Treatment suggestions  
+✅ Multilingual support  
+✅ Email reminders (opt-in)  
+✅ Live charts, CSV export, and prediction history
+
+---
+
+### 📄 Final `README.md`
+
+```markdown
 # 🌿 AI Plant Doctor
 
-AI Plant Doctor is an intelligent web application to diagnose plant diseases using deep learning. Upload a photo of a plant leaf, and the app will detect possible diseases with confidence scores. Includes a training dashboard for model monitoring and prediction history.
+AI Plant Doctor is a deep learning web app that diagnoses plant leaf diseases and recommends effective treatments — with multilingual support and farmer-friendly advice. Includes a training dashboard, CSV logs, prediction history, and optional email reminders.
 
 ---
 
 ## 📸 Features
 
-- Upload plant leaf image → get disease diagnosis
-- Train your own model using PlantVillage dataset
-- Dashboard with:
-  - Training loss/accuracy chart
-  - Prediction history table
-  - CSV & PNG export
-- Powered by FastAPI + PyTorch + Bootstrap
+- 🧠 Upload plant leaf image → Get disease diagnosis
+- 🌱 Treatment recommendations (English, Sinhala, Tamil)
+- 🌐 Web dashboard for training stats + prediction history
+- 📬 Email treatment reminders (optional)
+- 🧪 Train your own model using Kaggle's PlantVillage dataset
+- 🔁 Auto-detect user language from browser
+
+---
+
+## 🛠 Project Stack
+
+- FastAPI + Python for backend
+- PyTorch for model inference
+- Bootstrap + Chart.js for frontend
+- CSV + JSON-based logging
+- Optional: Gmail SMTP for reminders
 
 ---
 
@@ -20,7 +43,8 @@ AI Plant Doctor is an intelligent web application to diagnose plant diseases usi
 
 - Python 3.8+
 - pip / virtualenv
-- `kaggle.json` for dataset download (see `kaggle_guide.md`)
+- `kaggle.json` for dataset (see [`kaggle_guide.md`](kaggle_guide.md))
+- Optional: Gmail app password for email reminders
 
 ---
 
@@ -36,9 +60,15 @@ pip install -r requirements.txt
 
 ---
 
-## 🌱 Download the Dataset (PlantVillage)
+## 🌱 Get the Dataset
 
-Follow the instructions in [`kaggle_guide.md`](kaggle_guide.md) to download and prepare the dataset.
+1. Download from Kaggle (see [`kaggle_guide.md`](kaggle_guide.md))
+2. Extract to: `data/raw/PlantVillage/`
+3. Run this to split data:
+
+```bash
+python split_dataset.py
+```
 
 ---
 
@@ -48,8 +78,10 @@ Follow the instructions in [`kaggle_guide.md`](kaggle_guide.md) to download and 
 python -m training.train --data_dir=data --epochs=10
 ```
 
-- Outputs: `app/models/plant_model.pt`
-- Also generates: `training_log.csv`, `training_loss.png`
+Outputs:
+- `app/models/plant_model.pt`
+- `training_log.csv`
+- `training_loss.png`
 
 ---
 
@@ -62,43 +94,91 @@ uvicorn app.main:app --reload
 ```
 
 Visit:
-- Web UI: [http://localhost:8000](http://localhost:8000)
-- Dashboard: [http://localhost:8000/dashboard](http://localhost:8000/dashboard)
+
+- 🌿 App: [http://localhost:8000](http://localhost:8000)
+- 📊 Dashboard: [http://localhost:8000/dashboard](http://localhost:8000/dashboard)
 
 ---
 
-## 🛠 Project Structure
+## 🧪 API Endpoints
+
+| Endpoint                 | Method | Description                          |
+|--------------------------|--------|--------------------------------------|
+| `/api/predict`           | POST   | Upload image + language + email      |
+| `/api/training-log`      | GET    | Returns `training_log.csv` as JSON   |
+| `/api/prediction-history` | GET  | Returns past predictions as JSON     |
+
+---
+
+## 🗃 Prediction Log
+
+Predictions are saved to:
+
+```text
+logs/prediction_history.csv
+```
+
+With:
+- Timestamp
+- Label
+- Confidence
+- Language
+- Treatment given
+
+---
+
+## ✉️ Email Reminders (Optional)
+
+Enable email reminders by:
+
+1. Creating a Gmail App Password
+2. Updating `.env` or `send_email_reminder()` with credentials
+3. Submitting an email address with your image
+
+🛑 Email is never stored — it’s used to send a 1-time treatment reminder.
+
+---
+
+## 🌍 Multilingual Support
+
+- UI dropdown for: English, සිංහල (Sinhala), தமிழ் (Tamil)
+- Auto-detects browser language (via `Accept-Language` header)
+- Treatment guidance translated inside `treatment_guide.json`
+
+---
+
+## 📊 Dashboard
+
+- Training Loss & Accuracy (Chart.js)
+- Export CSV and PNG
+- Table of latest predictions
+
+---
+
+## 📂 Project Structure
 
 ```
 ├── app/
 │   ├── main.py              # FastAPI entrypoint
-│   ├── services/            # Inference logic
 │   ├── routes/              # API routes
-│   ├── models/              # Saved PyTorch model
-│   └── utils/               # (Optional helpers)
-├── training/                # Train, evaluate, split
+│   ├── services/            # Model & inference
+│   ├── utils/               # treatment_guide.json
+│   ├── models/              # Saved .pt file
 ├── public/                  # index.html, dashboard.html
+├── training/                # train.py, dataset.py
 ├── logs/                    # prediction_history.csv
-├── data/                    # train/ and val/ folders
+├── data/                    # train/ and val/
+├── split_dataset.py
+├── requirements.txt
 ```
 
 ---
 
-## 📊 Dashboard Features
+## 🤝 Contributing
 
-- Chart.js live graphs
-- Export training logs to CSV
-- See recent predictions in a table
-
----
-
-## 📤 API Endpoints
-
-| Endpoint             | Method | Description                        |
-|----------------------|--------|------------------------------------|
-| `/api/predict`       | POST   | Upload image → get prediction      |
-| `/api/training-log`  | GET    | Get training loss/acc log          |
-| `/api/prediction-history` | GET | List of predictions with confidence |
+- PRs welcome!
+- Help add more languages, crop diseases, or regional advice
+- Farmers, researchers, and devs — let's collaborate
 
 ---
 
@@ -108,6 +188,17 @@ MIT License
 
 ---
 
-## 🤝 Contributing
+## 🙏 Credits
 
-PRs welcome. Please open an issue for any bugs or feature requests.
+- Dataset: [PlantVillage (Kaggle)](https://www.kaggle.com/datasets/emmarex/plantdisease)
+- Inspiration: Community gardeners & farmers
+```
+
+---
+
+Would you like:
+- This whole project zipped?
+- A GitHub repo template with `.gitignore`, `.env.example`, `LICENSE`, etc.?
+- Hosting guidance (Netlify, Hugging Face, or Render)?
+
+Let me know how you want to deliver it!

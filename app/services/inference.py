@@ -26,19 +26,19 @@ transform = transforms.Compose([
                          [0.229, 0.224, 0.225])
 ])
 
-def log_prediction(label: str, confidence: float):
+def log_prediction(label: str, confidence: float, treatment: str, lang: str):
     os.makedirs("logs", exist_ok=True)
     file_path = "logs/prediction_history.csv"
     log_exists = os.path.exists(file_path)
 
-    with open(file_path, "a", newline="") as f:
+    with open(file_path, "a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         if not log_exists:
-            writer.writerow(["timestamp", "label", "confidence"])
-        writer.writerow([datetime.now().isoformat(), label, round(confidence, 4)])
+            writer.writerow(["timestamp", "label", "confidence", "treatment", "language"])
+        writer.writerow([datetime.now().isoformat(), label, round(confidence, 4), treatment, lang])
 
-def predict_disease(image: Image.Image) -> tuple[str, float]:
-    input_tensor = transform(image).unsqueeze(0)  # Add batch dimension
+def predict_disease(image: Image.Image, lang: str = "en") -> dict:
+    input_tensor = transform(image).unsqueeze(0)
     with torch.no_grad():
         outputs = model(input_tensor)
         probs = torch.nn.functional.softmax(outputs[0], dim=0)
@@ -46,13 +46,15 @@ def predict_disease(image: Image.Image) -> tuple[str, float]:
 
     label = CLASS_NAMES[predicted_class.item()]
     confidence_score = round(confidence.item(), 4)
-    treatment = TREATMENT_GUIDE.get(label, "No treatment info available.")
+    info = TREATMENT_GUIDE.get(label, {})
+    localized = info.get("lang", {}).get(lang, info.get("treatment", "No info."))
 
-    # ✅ Log the prediction for dashboard
-    log_prediction(label, confidence_score)
+    log_prediction(label, confidence_score, localized, lang)
 
     return {
         "label": label,
         "confidence": confidence_score,
-        "treatment": treatment
+        "treatment": localized,
+        "video": info.get("video"),
+        "product": info.get("product")
     }

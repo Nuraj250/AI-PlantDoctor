@@ -18,6 +18,16 @@
                     <label for="file" class="form-label">Upload Plant Leaf Image</label>
                     <input class="form-control" type="file" id="file" name="file" accept="image/*" required>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Language</label>
+                    <select class="form-select" name="lang" id="lang">
+                        <option value="en" selected>English</option>
+                        <option value="si">සිංහල</option>
+                        <option value="ta">தமிழ்</option>
+                    </select>
+                </div>
+
                 <button class="btn btn-success w-100" type="submit">Diagnose</button>
             </form>
 
@@ -34,6 +44,7 @@
             const fileInput = document.getElementById('file');
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
+            formData.append('lang', document.getElementById('lang').value);
 
             resultBox.className = "alert alert-info";
             resultBox.textContent = "🧠 Diagnosing...";
@@ -49,9 +60,11 @@
                 if (res.ok) {
                     resultBox.className = "alert alert-success";
                     resultBox.innerHTML = `
-                    <strong>Prediction:</strong> ${data.prediction}<br/>
-                    <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(2)}%<br/>
-                    <strong>Treatment:</strong> ${data.treatment}
+                                <strong>Prediction:</strong> ${data.label}<br/>
+                                <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(2)}%<br/>
+                                <strong>Treatment:</strong> ${data.treatment}<br/>
+                                ${data.video ? `<a href="${data.video}" target="_blank">📺 Watch Treatment Video</a><br/>` : ""}
+                                ${data.product ? `<a href="${data.product}" target="_blank">🛒 Buy Product</a>` : ""}
                     `;
                 } else {
                     throw new Error(data.detail || "Prediction failed.");

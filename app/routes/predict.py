@@ -6,20 +6,32 @@ import io
 import csv
 import os
 from fastapi.responses import JSONResponse
+from fastapi import Form
+from fastapi import Request
 
 router = APIRouter()
 
 @router.post("/predict")
-async def predict(file: UploadFile = File(...)):
+async def predict(
+    request: Request,
+    file: UploadFile = File(...),
+    lang: str = Form(None)  # Optional — override Accept-Language
+):
     try:
+        # Detect from headers if lang not passed
+        if not lang:
+            accept_lang = request.headers.get("accept-language", "en").lower()
+            if "si" in accept_lang:
+                lang = "si"
+            elif "ta" in accept_lang:
+                lang = "ta"
+            else:
+                lang = "en"
+
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)).convert("RGB")
-        result = predict_disease(image)
-        return JSONResponse(content={
-            "prediction": result["label"],
-            "confidence": result["confidence"],
-            "treatment": result["treatment"]
-        })
+        result = predict_disease(image, lang)
+        return JSONResponse(content=result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
