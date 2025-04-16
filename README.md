@@ -27,7 +27,7 @@ AI Plant Doctor is an intelligent web application to diagnose plant diseases usi
 ## 🚀 Installation
 
 ```bash
-git clone https://github.com/yourname/ai-plant-doctor.git
+git clone https://github.com/Nuraj250/ai-plant-doctor.git
 cd ai-plant-doctor
 python -m venv venv
 source venv/bin/activate     # or venv\Scripts\activate on Windows
@@ -111,5 +111,3 @@ MIT License
 ## 🤝 Contributing
 
 PRs welcome. Please open an issue for any bugs or feature requests.
-```
-
