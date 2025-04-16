@@ -4,10 +4,15 @@ from PIL import Image
 import os
 import csv
 from datetime import datetime
+import json
 
 # Model and classes
 MODEL_PATH = os.getenv("MODEL_PATH", "app/models/plant_model.pt")
 CLASS_NAMES = ["Healthy", "Leaf Spot", "Rust", "Blight", "Powdery Mildew"]  # Update based on your dataset
+
+TREATMENT_GUIDE_PATH = "app/utils/treatment_guide.json"
+with open(TREATMENT_GUIDE_PATH) as f:
+    TREATMENT_GUIDE = json.load(f)
 
 # Load model
 model = torch.load(MODEL_PATH, map_location=torch.device("cpu"))
@@ -41,8 +46,13 @@ def predict_disease(image: Image.Image) -> tuple[str, float]:
 
     label = CLASS_NAMES[predicted_class.item()]
     confidence_score = round(confidence.item(), 4)
+    treatment = TREATMENT_GUIDE.get(label, "No treatment info available.")
 
     # ✅ Log the prediction for dashboard
     log_prediction(label, confidence_score)
 
-    return label, confidence_score
+    return {
+        "label": label,
+        "confidence": confidence_score,
+        "treatment": treatment
+    }

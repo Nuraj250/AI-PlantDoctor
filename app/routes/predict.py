@@ -14,8 +14,12 @@ async def predict(file: UploadFile = File(...)):
     try:
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)).convert("RGB")
-        label, confidence = predict_disease(image)
-        return JSONResponse(content={"prediction": label, "confidence": confidence})
+        result = predict_disease(image)
+        return JSONResponse(content={
+            "prediction": result["label"],
+            "confidence": result["confidence"],
+            "treatment": result["treatment"]
+        })
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
