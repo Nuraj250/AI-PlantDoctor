@@ -1,6 +1,6 @@
 # 🌱 How to Train AI Plant Doctor on Your Own Dataset
 
-This guide walks you through how to prepare your **own plant leaf dataset**, train the model using it, and integrate it into the AI Plant Doctor app — without needing the Kaggle PlantVillage dataset.
+This guide walks you through how to prepare your **own plant leaf dataset**, train the model using it, and integrate it into the AI Plant Doctor app without needing the Kaggle PlantVillage dataset.
 
 ---
 
