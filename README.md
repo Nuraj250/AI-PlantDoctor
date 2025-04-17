@@ -30,7 +30,7 @@ AI Plant Doctor is a full-stack AI-powered application that diagnoses plant dise
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/yourname/ai-plant-doctor.git
+git clone https://github.com/Nuraj250/ai-plant-doctor.git
 cd ai-plant-doctor
 python -m venv venv
 venv\Scripts\activate    # Or source venv/bin/activate (Linux/Mac)
