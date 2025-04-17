@@ -11,7 +11,7 @@ MODEL_PATH = os.getenv("MODEL_PATH", "app/models/plant_model.pt")
 CLASS_NAMES = ["Healthy", "Leaf Spot", "Rust", "Blight", "Powdery Mildew"]  # Update based on your dataset
 
 TREATMENT_GUIDE_PATH = "app/utils/treatment_guide.json"
-with open(TREATMENT_GUIDE_PATH) as f:
+with open(TREATMENT_GUIDE_PATH, encoding="utf-8") as f:
     TREATMENT_GUIDE = json.load(f)
 
 # Load model
