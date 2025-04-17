@@ -1,6 +1,6 @@
 # 🌿 AI Plant Doctor
 
-AI Plant Doctor is a full-stack AI-powered application that diagnoses plant diseases from leaf images and recommends treatments. Built with FastAPI, PyTorch, Bootstrap, and Chart.js — it also includes a training dashboard, multilingual support, prediction history logging, and optional treatment reminders.
+AI Plant Doctor is a full-stack AI-powered application that diagnoses plant diseases from leaf images and recommends treatments. Built with FastAPI, PyTorch, Bootstrap, and Chart.js it also includes a training dashboard, multilingual support, prediction history logging, and optional treatment reminders.
 
 ---
 -
