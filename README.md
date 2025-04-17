@@ -1,60 +1,48 @@
 # 🌿 AI Plant Doctor
 
-AI Plant Doctor is a deep learning web app that diagnoses plant leaf diseases and recommends effective treatments with multilingual support and farmer-friendly advice. Includes a training dashboard, CSV logs, prediction history, and optional email reminders.
+AI Plant Doctor is a full-stack AI-powered application that diagnoses plant diseases from leaf images and recommends treatments. Built with FastAPI, PyTorch, Bootstrap, and Chart.js — it also includes a training dashboard, multilingual support, prediction history logging, and optional treatment reminders.
+
+---
+-
+## 🚀 Features
+
+- 🧠 Upload a plant leaf image → get diagnosis and confidence score
+- 🌱 Treatment recommendations in English, Sinhala, Tamil
+- 📊 Dashboard with training loss, accuracy charts, and prediction history
+- ✉️ Optional email reminders for treatment
+- 🗂 Prediction logs stored in CSV
+- 🔤 Auto-detects browser language
+- 🖼 Image preview after upload
 
 ---
 
-## 📸 Features
+## 🧰 Stack
 
-- 🧠 Upload plant leaf image → Get disease diagnosis
-- 🌱 Treatment recommendations (English, Sinhala, Tamil)
-- 🌐 Web dashboard for training stats + prediction history
-- 📬 Email treatment reminders (optional)
-- 🧪 Train your own model using Kaggle's PlantVillage dataset
-- 🔁 Auto-detect user language from browser
-
----
-
-## 🛠 Project Stack
-
-- FastAPI + Python for backend
-- PyTorch for model inference
-- Bootstrap + Chart.js for frontend
-- CSV + JSON-based logging
-- Optional: Gmail SMTP for reminders
+- **Backend**: FastAPI, Python, PyTorch
+- **Frontend**: HTML, Bootstrap 5, Chart.js
+- **Data**: PlantVillage dataset (Kaggle)
+- **Model**: ResNet-based classifier
+- **Logging**: CSV + Chart
+- **Training**: Customizable via CLI
 
 ---
 
-## 📦 Requirements
-
-- Python 3.8+
-- pip / virtualenv
-- `kaggle.json` for dataset (see [`kaggle_guide.md`](kaggle_guide.md))
-- Optional: Gmail app password for email reminders
-
----
-
-## 🚀 Installation
+## 📦 Installation
 
 ```bash
-git clone https://github.com/Nuraj250/ai-plant-doctor.git
+git clone https://github.com/yourname/ai-plant-doctor.git
 cd ai-plant-doctor
 python -m venv venv
-source venv/bin/activate     # or venv\Scripts\activate on Windows
+venv\Scripts\activate    # Or source venv/bin/activate (Linux/Mac)
 pip install -r requirements.txt
 ```
 
 ---
 
-## 🌱 Get the Dataset
+## 🌱 Dataset Setup
 
-1. Download from Kaggle (see [`kaggle_guide.md`](kaggle_guide.md))
-2. Extract to: `data/raw/PlantVillage/`
-3. Run this to split data:
-
-```bash
-python split_dataset.py
-```
+To download and split the PlantVillage dataset, follow [`kaggle_guide.md`](kaggle_guide.md)
+or train your own one dataset, follow [`train-your-own-data.md`](train-your-own-data.md)
 
 ---
 
@@ -64,24 +52,22 @@ python split_dataset.py
 python -m training.train --data_dir=data --epochs=10
 ```
 
-Outputs:
-- `app/models/plant_model.pt`
-- `training_log.csv`
-- `training_loss.png`
+After training, you will get:
+
+- `app/models/plant_model.pt` ✅
+- `training_log.csv` ✅
+- `training_loss.png` ✅
 
 ---
 
-## 🌐 Run the App
+## 🔁 Run the App
 
 ```bash
-./run.sh
-# or
 uvicorn app.main:app --reload
 ```
 
-Visit:
-
-- 🌿 App: [http://localhost:8000](http://localhost:8000)
+### Access:
+- 🌿 Web UI: [http://localhost:8000](http://localhost:8000)
 - 📊 Dashboard: [http://localhost:8000/dashboard](http://localhost:8000/dashboard)
 
 ---
@@ -90,81 +76,51 @@ Visit:
 
 | Endpoint                 | Method | Description                          |
 |--------------------------|--------|--------------------------------------|
-| `/api/predict`           | POST   | Upload image + language + email      |
-| `/api/training-log`      | GET    | Returns `training_log.csv` as JSON   |
-| `/api/prediction-history` | GET  | Returns past predictions as JSON     |
+| `/api/predict`           | POST   | Upload image → diagnosis + treatment |
+| `/api/training-log`      | GET    | Get training history (CSV)           |
+| `/api/prediction-history` | GET   | Past predictions from logs           |
 
 ---
 
-## 🗃 Prediction Log
+## 🗃 Logs
 
-Predictions are saved to:
-
-```text
-logs/prediction_history.csv
-```
-
-With:
-- Timestamp
-- Label
-- Confidence
-- Language
-- Treatment given
+- **Predictions** → `logs/prediction_history.csv`
+- **Training log** → `training_log.csv`
 
 ---
 
-## ✉️ Email Reminders (Optional)
+## 🌍 Language Support
 
-Enable email reminders by:
+- English (`en`)
+- Sinhala (`si`)
+- Tamil (`ta`)
 
-1. Creating a Gmail App Password
-2. Updating `.env` or `send_email_reminder()` with credentials
-3. Submitting an email address with your image
-
-🛑 Email is never stored — it’s used to send a 1-time treatment reminder.
+Auto-detects language via browser header or dropdown.
 
 ---
 
-## 🌍 Multilingual Support
+## 📨 Email Reminders
 
-- UI dropdown for: English, සිංහල (Sinhala), தமிழ் (Tamil)
-- Auto-detects browser language (via `Accept-Language` header)
-- Treatment guidance translated inside `treatment_guide.json`
+Enable by modifying `send_email_reminder()` in `inference.py` with your SMTP credentials.
 
 ---
 
-## 📊 Dashboard
-
-- Training Loss & Accuracy (Chart.js)
-- Export CSV and PNG
-- Table of latest predictions
-
----
-
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```
 ├── app/
-│   ├── main.py              # FastAPI entrypoint
-│   ├── routes/              # API routes
-│   ├── services/            # Model & inference
-│   ├── utils/               # treatment_guide.json
-│   ├── models/              # Saved .pt file
-├── public/                  # index.html, dashboard.html
-├── training/                # train.py, dataset.py
-├── logs/                    # prediction_history.csv
-├── data/                    # train/ and val/
+│   ├── main.py
+│   ├── routes/
+│   ├── services/
+│   ├── utils/                 # treatment_guide.json
+│   └── models/                # plant_model.pt
+├── public/                    # index.html + dashboard.html
+├── training/                  # train.py, dataset.py, evaluate.py
+├── logs/                      # prediction_history.csv
+├── data/                      # train/, val/, raw/
 ├── split_dataset.py
 ├── requirements.txt
 ```
-
----
-
-## 🤝 Contributing
-
-- PRs welcome!
-- Help add more languages, crop diseases, or regional advice
-- Farmers, researchers, and devs — let's collaborate
 
 ---
 
@@ -174,7 +130,8 @@ MIT License
 
 ---
 
-## 🙏 Credits
+## ✨ Credits
 
-- Dataset: [PlantVillage (Kaggle)](https://www.kaggle.com/datasets/emmarex/plantdisease)
-- Inspiration: Community gardeners & farmers
+- Dataset: [PlantVillage on Kaggle](https://www.kaggle.com/datasets/emmarex/plantdisease)
+- Icon: Bootstrap Icons + Emoji
+```
