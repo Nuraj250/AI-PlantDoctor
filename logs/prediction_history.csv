@@ -1,0 +1,6 @@
+timestamp,label,confidence,treatment,language
+2025-04-17T08:35:13.408853,Healthy,0.5245,ප්‍රතිකාර අවශ්‍ය නොවේ. බිම් ආර්දතාව පරීක්ෂා කර සවිකිරීම පමණක් කරන්න.,si
+2025-04-17T08:40:46.145188,Healthy,0.5245,No treatment needed. Monitor regularly and water as required.,en
+2025-04-17T08:43:41.164024,Healthy,0.5245,"சிகிச்சை தேவையில்லை. தாவரங்களை பார்வையிட்டு, நீர்ப்பாசனம் மட்டும் செய்யவும்.",ta
+2025-04-17T08:43:58.731113,Healthy,0.9153,"சிகிச்சை தேவையில்லை. தாவரங்களை பார்வையிட்டு, நீர்ப்பாசனம் மட்டும் செய்யவும்.",ta
+2025-04-17T08:44:18.310604,Healthy,0.9153,No treatment needed. Monitor regularly and water as required.,en
